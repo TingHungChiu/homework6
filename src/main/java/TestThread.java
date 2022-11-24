@@ -13,6 +13,7 @@ public class TestThread extends Thread  {
     static ConcurrentLinkedQueue<Integer> JLQueue;
     static SLQueue<Integer> SLQueue;
     static ULFQueue<Integer> ULFQueue;
+    static BLFQueue BLFQueue;
     private int n;
 
     public TestThread(String queue, int iters,  int op, int n) {
@@ -25,6 +26,7 @@ public class TestThread extends Thread  {
         this.JLQueue = new ConcurrentLinkedQueue<>();
         this.SLQueue = new SLQueue<>(n);
         this.ULFQueue = new ULFQueue<>();
+        this.BLFQueue = new BLFQueue();
     }
 
     long start = 0;
@@ -112,6 +114,38 @@ public class TestThread extends Thread  {
                             Integer item = null;
                             try {
                                 item = ULFQueue.deq();
+                            } catch (Exception e)
+                            {}
+                            if (item != null)
+                                deqcount++;
+                            if (System.currentTimeMillis() - start >= iters * 1000)
+                                break;
+                        }
+                        break;
+                    default:
+                        System.out.println("error");
+                }
+                break;
+            case "BLFQueue":
+                switch (op) {
+                    case 0:
+                        start = System.currentTimeMillis();
+                        while (true)
+                        {
+                            int random = threadLocalRandom.nextInt(0, Integer.MAX_VALUE);
+                            BLFQueue.enq(random%100);
+                            enqcount++;
+                            if (System.currentTimeMillis() - start >= iters * 1000)
+                                break;
+                        }
+                        break;
+                    case 1:
+                        start = System.currentTimeMillis();
+                        while(true)
+                        {
+                            Integer item = null;
+                            try {
+                                item = BLFQueue.deq();
                             } catch (Exception e)
                             {}
                             if (item != null)

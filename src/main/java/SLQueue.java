@@ -18,7 +18,7 @@ public class SLQueue<T> {
         this.n = n;
     }
 
-    private T travel(int index, Node succ) {
+    private T pick(int index, Node succ) {
         for (int i = 0; i < index; i++)
         {
             if (succ.next.get() == null)
@@ -68,7 +68,7 @@ public class SLQueue<T> {
                     if (n > 1) {
                         if (tmp < n) {
                             int random = ThreadLocalRandom.current().nextInt(0,n);
-                            T value = travel(random, succ);
+                            T value = pick(random, succ);
                             if (value != null)
                             {
                                 size.getAndDecrement();

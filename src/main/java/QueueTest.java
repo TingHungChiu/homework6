@@ -53,6 +53,9 @@ public class QueueTest {
             case "ULFQueue":
                 nodeCount = threads[0].getSizeULFQueue();
                 break;
+            case "BLFQueue":
+                nodeCount = 64;
+                break;
         }
         System.out.println(enqCount + " " + deqCount + " " + nodeCount);
         System.out.println((enqCount+deqCount)/iters);
