@@ -36,16 +36,24 @@ public class QueueTest {
 
         long enqCount = 0;
         long deqCount = 0;
-        int nodeCount;
+        int nodeCount = 0;
         for (int t = 0; t < totalthread; t++) {
             threads[t].join();
             enqCount += threads[t].getEnqCount();
             deqCount += threads[t].getDeqCount();
         }
-        if (args[0].equals("LQueue"))
-            nodeCount = threads[0].getSizeLQueue();
-        else
-            nodeCount = threads[0].getSizeSLQueue();
+        switch(args[0])
+        {
+            case "JLQueue":
+                nodeCount = threads[0].getSizeJLQueue();
+                break;
+            case "SLQueue":
+                nodeCount = threads[0].getSizeSLQueue();
+                break;
+            case "ULFQueue":
+                nodeCount = threads[0].getSizeULFQueue();
+                break;
+        }
         System.out.println(enqCount + " " + deqCount + " " + nodeCount);
         System.out.println((enqCount+deqCount)/iters);
     }

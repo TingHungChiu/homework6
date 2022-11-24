@@ -36,16 +36,16 @@ public class SLQueue<T> {
         Node node = new Node(item);
         while (true) {
             Node last = tail.get();
-            Node newnode = last.next.get();
+            Node next = last.next.get();
             if (last == tail.get()) {
-                if (newnode == null) {
-                    if (last.next.compareAndSet(newnode, node)) {
+                if (next == null) {
+                    if (last.next.compareAndSet(next, node)) {
                         tail.compareAndSet(last, node);
                         size.getAndIncrement();
                         return;
                     }
                 } else {
-                    tail.compareAndSet(last, newnode);
+                    tail.compareAndSet(last, next);
                 }
             }
         }
