@@ -1,10 +1,7 @@
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
-
+@SuppressWarnings("unchecked")
 public class ULFQueueTest extends Thread {
-    /**
-     * @author Mohamed M. Saad
-     */
     private static int ID_GEN = 0;
     private int id;
     long elapsed;
@@ -28,7 +25,7 @@ public class ULFQueueTest extends Thread {
         long start = System.currentTimeMillis();
 
         for (int i = 0; i < iter; i++) {
-            int data = ThreadLocalRandom.current().nextInt(0, 100);
+            int data = ThreadLocalRandom.current().nextInt(0, Integer.MAX_VALUE);
             if (i % 2 == 0) {
                 queue.enq(data);
                 enqCount.getAndIncrement();
@@ -46,11 +43,11 @@ public class ULFQueueTest extends Thread {
         return elapsed;
     }
 
-    public int getEnqueues() {
+    public int getEnq() {
         return enqCount.get();
     }
 
-    public int getDequeues() {
+    public int getDeq() {
         return deqCount.get();
     }
 }

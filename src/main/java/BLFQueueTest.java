@@ -1,6 +1,6 @@
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
-
+@SuppressWarnings("unchecked")
 public class BLFQueueTest extends Thread {
     private static int ID_GEN = 0;
     private int id;
@@ -10,10 +10,10 @@ public class BLFQueueTest extends Thread {
     AtomicInteger enqCount = new AtomicInteger();
     AtomicInteger deqCount = new AtomicInteger();
 
-    public BLFQueueTest(BLFQueue queue, int iter) {
+    public BLFQueueTest(BLFQueue queue, int iters) {
         id = ID_GEN++;
         this.queue = queue;
-        this.iter = iter;
+        this.iter = iters;
     }
 
     public static void reset() {
@@ -25,7 +25,7 @@ public class BLFQueueTest extends Thread {
         long start = System.currentTimeMillis();
 
         for (int i = 0; i < iter; i++) {
-            int data = ThreadLocalRandom.current().nextInt(0, 100);
+            int data = ThreadLocalRandom.current().nextInt(0, Integer.MAX_VALUE);
             if (i % 2 == 0) {
                 queue.enq(data);
                 enqCount.getAndIncrement();

@@ -1,7 +1,7 @@
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
-
+@SuppressWarnings("unchecked")
 public class JLQueueTest extends Thread {
     private static int ID_GEN = 0;
     private int id;
@@ -26,7 +26,7 @@ public class JLQueueTest extends Thread {
         long start = System.currentTimeMillis();
 
         for (int i = 0; i < iter; i++) {
-            int data = ThreadLocalRandom.current().nextInt(0, 100);
+            int data = ThreadLocalRandom.current().nextInt(0, Integer.MAX_VALUE);
             if (i % 2 == 0) {
                 queue.add(data);
                 enqCount.getAndIncrement();

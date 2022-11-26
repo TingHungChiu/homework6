@@ -32,7 +32,7 @@ public class QueueTest {
                     runBLFQueueTest(threadCount, iters);
                     break;
                 case SLQUEUE:
-                    runSLQueueTest(threadCount, iters);
+                    runSLQueueTest(threadCount, iters,n);
                     break;
             }
         }
@@ -41,6 +41,7 @@ public class QueueTest {
     private static void runJLQueueTest(int threadCount, int iters) throws Exception {
         final ConcurrentLinkedQueue<Integer> queue = new ConcurrentLinkedQueue<>();
         final JLQueueTest[] threads = new JLQueueTest[threadCount];
+        JLQueueTest.reset();
 
         for (int t = 0; t < threadCount; t++) {
             threads[t] = new JLQueueTest(queue, iters);
@@ -51,22 +52,22 @@ public class QueueTest {
         }
 
         long totalTime = 0;
-        int enq_index = 0;
-        int deq_index = 0;
+        int enqCount = 0;
+        int deqCount = 0;
         for (int t = 0; t < threadCount; t++) {
             threads[t].join();
             totalTime += threads[t].getElapsedTime();
-            enq_index += threads[t].getEnq();
-            deq_index += threads[t].getDeq();
+            enqCount += threads[t].getEnq();
+            deqCount += threads[t].getDeq();
         }
-        System.out.println(enq_index +" " + deq_index + " " + (enq_index - deq_index) + " ");
-        System.out.println("Throughput is " + (iters*threadCount) / (totalTime*0.001)+ "ops");
-        System.out.println("Average time per thread is " + totalTime / threadCount + "ms");
+        System.out.println(enqCount +" " + deqCount + " " + (enqCount - deqCount) + " ");
+        System.out.println((iters*threadCount) / (totalTime*0.001));
     }
 
     private static void runULFQueueTest(int threadCount, int iters) throws Exception {
         final ULFQueueTest[] threads = new ULFQueueTest[threadCount];
         final ULFQueue<Integer> queue = new ULFQueue<>();
+        ULFQueueTest.reset();
 
         for (int t = 0; t < threadCount; t++) {
             threads[t] = new ULFQueueTest(queue, iters);
@@ -77,22 +78,22 @@ public class QueueTest {
         }
 
         long totalTime = 0;
-        int enq_index = 0;
-        int deq_index = 0;
+        int enqCount = 0;
+        int deqCount = 0;
         for (int t = 0; t < threadCount; t++) {
             threads[t].join();
             totalTime += threads[t].getElapsedTime();
-            enq_index += threads[t].getEnqueues();
-            deq_index += threads[t].getDequeues();
+            enqCount += threads[t].getEnq();
+            deqCount += threads[t].getDeq();
         }
-        System.out.println(enq_index +" " + deq_index + " " + (enq_index - deq_index) + " ");
-        System.out.println("Throughput is " + (iters*threadCount) / (totalTime*0.001)+ "ops");
-        System.out.println("Average time per thread is " + totalTime / threadCount + "ms");
+        System.out.println(enqCount +" " + deqCount + " " + (enqCount - deqCount) + " ");
+        System.out.println((iters*threadCount) / (totalTime*0.001));
     }
 
     private static void runBLFQueueTest(int threadCount, int iters) throws Exception {
         final BLFQueueTest[] threads = new BLFQueueTest[threadCount];
         final BLFQueue<Integer> queue = new BLFQueue<>();
+        BLFQueueTest.reset();
 
         for (int t = 0; t < threadCount; t++) {
             threads[t] = new BLFQueueTest(queue, iters);
@@ -103,26 +104,26 @@ public class QueueTest {
         }
 
         long totalTime = 0;
-        int enq_index = 0;
-        int deq_index = 0;
+        int enqCount = 0;
+        int deqCount = 0;
         for (int t = 0; t < threadCount; t++) {
             threads[t].join();
             totalTime += threads[t].getElapsedTime();
-            enq_index += threads[t].getEnq();
-            deq_index += threads[t].getDeq();
+            enqCount += threads[t].getEnq();
+            deqCount += threads[t].getDeq();
         }
-        System.out.println(enq_index +" " + deq_index + " " + (enq_index - deq_index) + " ");
-        System.out.println("Throughput is " + (iters*threadCount) / (totalTime*0.001)+ "ops");
-        System.out.println("Average time per thread is " + totalTime / threadCount + "ms");
+        System.out.println(enqCount +" " + deqCount + " " + (enqCount - deqCount) + " ");
+        System.out.println((iters*threadCount) / (totalTime*0.001));
     }
 
-    private static void runSLQueueTest(int threadCount, int iters) throws Exception {
+    private static void runSLQueueTest(int threadCount, int iters,int n) throws Exception {
         final SLQueueTest[] threads = new SLQueueTest[threadCount];
-        int n = 0;
         final SLQueue<Integer> queue = new SLQueue<>(n);
 
+        SLQueueTest.reset();
+
         for (int t = 0; t < threadCount; t++) {
-            threads[t] = new SLQueueTest(queue, iters);
+            threads[t] = new SLQueueTest(queue, iters, n);
         }
 
         for (int t = 0; t < threadCount; t++) {
@@ -130,17 +131,16 @@ public class QueueTest {
         }
 
         long totalTime = 0;
-        int enq_index = 0;
-        int deq_index = 0;
+        int enqCount = 0;
+        int deqCount = 0;
         for (int t = 0; t < threadCount; t++) {
             threads[t].join();
             totalTime += threads[t].getElapsedTime();
-            enq_index += threads[t].getEnq();
-            deq_index += threads[t].getDeq();
+            enqCount += threads[t].getEnq();
+            deqCount += threads[t].getDeq();
         }
-        System.out.println(enq_index +" " + deq_index + " " + (enq_index - deq_index) + " ");
-        System.out.println("Throughput is " + (iters*threadCount) / (totalTime*0.001)+ "ops");
-        System.out.println("Average time per thread is " + totalTime / threadCount + "ms");
+        System.out.println(enqCount +" " + deqCount + " " + (enqCount - deqCount) + " ");
+        System.out.println((iters*threadCount) / (totalTime*0.001));
     }
 }
 

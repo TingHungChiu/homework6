@@ -6,8 +6,6 @@ public class ULFQueue<T> {
         AtomicReference<Node> head;
         AtomicReference<Node> tail;
 
-        private AtomicInteger size = new AtomicInteger();
-
         public ULFQueue(){
             sentinel = new Node();
             head = new AtomicReference<>(sentinel);
@@ -24,7 +22,6 @@ public class ULFQueue<T> {
                     if (next == null) {
                         if (last.next.compareAndSet(null, node)) {
                             tail.compareAndSet(last, node);
-                            size.getAndIncrement();
                             return;
                         }
                     } else {
@@ -47,14 +44,12 @@ public class ULFQueue<T> {
                     } else {
                         T value = next.value;
                         if (head.compareAndSet(first, next))
-                            size.getAndDecrement();
                             return value;
                     }
                 }
             }
 
         }
-        public int size() {return size.get();}
 public class Node{
         public T value;
         public AtomicReference<Node> next;

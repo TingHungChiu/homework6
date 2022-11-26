@@ -1,6 +1,6 @@
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
-
+@SuppressWarnings("unchecked")
 public class SLQueueTest extends Thread {
     private static int ID_GEN = 0;
     private int id;
@@ -11,7 +11,7 @@ public class SLQueueTest extends Thread {
     AtomicInteger enqCount = new AtomicInteger();
     AtomicInteger deqCount = new AtomicInteger();
 
-    public SLQueueTest(SLQueue queue, int iter) {
+    public SLQueueTest(SLQueue queue, int iter, int n) {
         id = ID_GEN++;
         this.queue = queue;
         this.iter = iter;
@@ -27,9 +27,9 @@ public class SLQueueTest extends Thread {
         long start = System.currentTimeMillis();
 
         for (int i = 0; i < iter; i++) {
-            int data = ThreadLocalRandom.current().nextInt(0, Integer.MAX_VALUE)%100;
+            int item = ThreadLocalRandom.current().nextInt(0, Integer.MAX_VALUE);
             if (i % 2 == 0) {
-                queue.enq(data);
+                queue.enq(item);
                 enqCount.getAndIncrement();
             } else {
                 try {
