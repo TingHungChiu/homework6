@@ -28,7 +28,7 @@ public class BLFQueue<T> {
         int position = (ticket % QUEUE_SIZE);
         Item it = queue[position];
         while(it.lastID != turn);
-        it.lastID += 1;
+        it.lastID = turn + 1;
         int tmp = it.value;
         it.value=0;
         return tmp;

@@ -10,7 +10,7 @@ public class QueueTest {
 
     public static void main(String[] args) throws Exception {
         String mode = args.length <= 0 ? "JLQueue" : args[0];
-        int threadCount = (args.length <= 1 ? 8 : Integer.parseInt(args[1]));
+        int threadCount = (args.length <= 1 ? 16 : Integer.parseInt(args[1]));
         int totalIters = (args.length <= 2 ? 64000 : Integer.parseInt(args[2]));
         int n = (args.length <= 3 ? 8 : Integer.parseInt(args[3]));
         int iters = totalIters / threadCount;
