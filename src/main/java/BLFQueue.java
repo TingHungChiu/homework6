@@ -1,8 +1,8 @@
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class BLFQueue {
+public class BLFQueue<T> {
     private final static int QUEUE_SIZE = 64;
-    private final Item[] queue = new Item[QUEUE_SIZE];
+    private final Item<T>[] queue = new Item[QUEUE_SIZE];
     private final AtomicInteger writer = new AtomicInteger ();
     private final AtomicInteger read = new AtomicInteger ();
 
